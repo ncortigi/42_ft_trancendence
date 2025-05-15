@@ -63,7 +63,7 @@ Tutto in un'unica applicazione moderna, sicura e responsive!
 
 1. **Clona il repository**
    ```sh
-   git clone https://github.com/minestrinad/ft_transcendence.git
+   git clone https://github.com/ncortigi/42_ft_trancendence.git
    cd ft_transcendence
    ```
 2. **Configura le variabili d'ambiente**
