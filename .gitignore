@@ -1,0 +1,24 @@
+# Python specific
+__pycache__/
+game/migrations/
+
+# IDE/editor specific
+.vscode/
+.prettierrc
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore secret files
+.env
+*.pem
+
+# Frontend
+*-lock.json
+node_modules/
+
+# Logs
+*.log
+
+

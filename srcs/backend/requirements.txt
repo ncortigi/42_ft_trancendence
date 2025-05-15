@@ -1,0 +1,13 @@
+Django
+gunicorn
+psycopg2-binary
+django-cors-headers
+djangorestframework
+whitenoise
+django-oauth-toolkit
+python-dotenv
+requests
+django-sslserver
+dj-database-url
+channels
+Pillow

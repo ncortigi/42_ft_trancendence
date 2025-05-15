@@ -1,0 +1,2357 @@
+{
+	"info": {
+		"_postman_id": "d3e5793b-3c5b-42c0-8b65-e7fabfa237a8",
+		"name": "ft_transcendence",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "40797497"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "201_CREATED",
+					"item": [
+						{
+							"name": "signup",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 201\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(10);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"email\": \"example@example.com\", \r\n    \"username\": \"example\", \r\n    \"password\": \"3X4mpl3:ex\" \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/auth/signup/"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "200_OK",
+					"item": [
+						{
+							"name": "guests",
+							"item": [
+								{
+									"name": "guests",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8000/auth/guest?uid=example%235024",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"auth",
+												"guest"
+											],
+											"query": [
+												{
+													"key": "uid",
+													"value": "example#5024"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "guest",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "X-CSRFToken",
+												"value": "BWmuZwzbUC5ogMnmxSN9PqeHmz1HyLnz",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\":\"example1@example.com\",\r\n    \"password\":\"3X4mpl3:ex\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8000/auth/guest/?uid=example%235024",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"auth",
+												"guest",
+												""
+											],
+											"query": [
+												{
+													"key": "uid",
+													"value": "example%235024"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the login response data\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.data).to.be.an('object');\r",
+											"\r",
+											"    pm.expect(responseData.data).to.have.property('uid');\r",
+											"    pm.expect(responseData.data).to.have.property('username', 'example');\r",
+											"//    pm.expect(responseData).to.have.property('log_index', 'authn');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"    // 306, \r",
+											"  pm.expect(pm.response.responseTime).to.be.below(50);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"email\": \"example@example.com\", \r\n    \"password\": \"3X4mpl3:ex\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/auth/login/"
+							},
+							"response": []
+						},
+						{
+							"name": "isAuthorized",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(25);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/auth/is-authenticated"
+							},
+							"response": []
+						},
+						{
+							"name": "csrf_token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(30);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/auth/csrf-token/"
+							},
+							"response": []
+						},
+						{
+							"name": "login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the login response data\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.data).to.be.an('object');\r",
+											"\r",
+											"    pm.expect(responseData.data).to.have.property('uid');\r",
+											"    pm.expect(responseData.data).to.have.property('username', 'example');\r",
+											"//    pm.expect(responseData).to.have.property('log_index', 'authn');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(10);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/auth/login/"
+							},
+							"response": []
+						},
+						{
+							"name": "userInfo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the login response data\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.data).to.be.an('object');\r",
+											"\r",
+											"    pm.expect(responseData.data).to.have.property('uid');\r",
+											"    pm.expect(responseData.data).to.have.property('username', 'example');\r",
+											"    pm.expect(responseData.data).to.have.property('email', 'example@example.com');\r",
+											"    pm.expect(responseData.data).to.have.property('description', '');\r",
+											"//    pm.expect(responseData).to.have.property('log_index', 'authn');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(10);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/auth/user-info/"
+							},
+							"response": []
+						},
+						{
+							"name": "userInfo: update-email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(50);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"/*pm.sendRequest('http://localhost:8000/auth/csrf-token/', function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error(err);\r",
+											"    } else {\r",
+											"        var csrfToken = res.json().csrf_token;\r",
+											"\r",
+											"        console.debug(\"csrf_token: {}\", csrfToken );\r",
+											"        pm.environment.set(\"X-CSRFToken\", csrfToken);\r",
+											"    }\r",
+											"});*/"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CSRFToken",
+										"value": "S9ILG8Pc3RzdwVpx9zQxlnNbvjgLtEXg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"newexampleexample.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/auth/user-info/?uid=example%239034",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"user-info",
+										""
+									],
+									"query": [
+										{
+											"key": "uid",
+											"value": "example%239034"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "userInfo: update-descriptio",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Sending a GET request to fetch CSRF token\r",
+											"/*pm.sendRequest('http://localhost:8000/auth/csrf-token/', function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error(err);\r",
+											"    } else {\r",
+											"        // Extracting CSRF token from the response body\r",
+											"        var csrfToken = res.json().csrf_token;\r",
+											"\r",
+											"        console.debug(\"csrf_token: {}\", csrfToken );\r",
+											"        // Setting the CSRF token in the environment variable\r",
+											"        pm.environment.set(\"X-CSRFToken\", csrfToken);\r",
+											"    }\r",
+											"});*/"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CSRFToken",
+										"value": "ZiME4Kitt87ly4y9BaI24wcIeIlIdYej",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"description\": \"Hello, world!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/auth/user-info/?username=notexample&uid=4499",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"user-info",
+										""
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "notexample"
+										},
+										{
+											"key": "uid",
+											"value": "4499"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "userInfo: update-username",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Sending a GET request to fetch CSRF token\r",
+											"/*pm.sendRequest('http://localhost:8000/auth/csrf-token/', function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error(err);\r",
+											"    } else {\r",
+											"        // Extracting CSRF token from the response body\r",
+											"        var csrfToken = res.json().csrf_token;\r",
+											"\r",
+											"        console.debug(\"csrf_token: {}\", csrfToken );\r",
+											"        // Setting the CSRF token in the environment variable\r",
+											"        pm.environment.set(\"X-CSRFToken\", csrfToken);\r",
+											"    }\r",
+											"});*/"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CSRFToken",
+										"value": "ZiME4Kitt87ly4y9BaI24wcIeIlIdYej",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"newexample\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/auth/user-info/?username=example&uid=4499",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"user-info",
+										""
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "example"
+										},
+										{
+											"key": "uid",
+											"value": "4499"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "userInfo: update-password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Sending a GET request to fetch CSRF token\r",
+											"/*pm.sendRequest('http://localhost:8000/auth/csrf-token/', function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error(err);\r",
+											"    } else {\r",
+											"        // Extracting CSRF token from the response body\r",
+											"        var csrfToken = res.json().csrf_token;\r",
+											"\r",
+											"        console.debug(\"csrf_token: {}\", csrfToken );\r",
+											"        // Setting the CSRF token in the environment variable\r",
+											"        pm.environment.set(\"X-CSRFToken\", csrfToken);\r",
+											"    }\r",
+											"});*/"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-CSRFToken",
+										"value": "ZVLD6Hyhbuzf788nRBtw0FMvm4OPRrMd",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\": \"n3w3x4mpl3:ex\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/auth/user-info/?username=notexample&uid=4499",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"user-info",
+										""
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "notexample"
+										},
+										{
+											"key": "uid",
+											"value": "4499"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login: [afterPUT]",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the login response data\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.data).to.be.an('object');\r",
+											"\r",
+											"    pm.expect(responseData.data).to.have.property('uid');\r",
+											"    pm.expect(responseData.data).to.have.property('username', 'newexample');\r",
+											"//    pm.expect(responseData).to.have.property('log_index', 'authn');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/auth/login/"
+							},
+							"response": []
+						},
+						{
+							"name": "userInfo: [afterPUT]",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify the login response data\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.data).to.be.an('object');\r",
+											"\r",
+											"    pm.expect(responseData.data).to.have.property('uid');\r",
+											"    pm.expect(responseData.data).to.have.property('username', 'newexample');\r",
+											"    pm.expect(responseData.data).to.have.property('email', 'newexample@example.com');\r",
+											"    pm.expect(responseData.data).to.have.property('description', 'Hello, world!');\r",
+											"//    pm.expect(responseData).to.have.property('log_index', 'authn');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/auth/user-info/?username=newexample&uid=4499",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"user-info",
+										""
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "newexample"
+										},
+										{
+											"key": "uid",
+											"value": "4499"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logout",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(50);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"/*pm.sendRequest('http://localhost:8000/auth/csrf-token/', function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error(err);\r",
+											"    } else {\r",
+											"        var csrfToken = res.json().csrf_token;\r",
+											"\r",
+											"        console.debug(\"csrf_token: {}\", csrfToken );\r",
+											"        pm.environment.set(\"X-CSRFToken\", csrfToken);\r",
+											"    }\r",
+											"});*/"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CSRFToken",
+										"value": "J5ou5GAYLkBnr3Zk9hHW0GPIN1cYhyyL",
+										"type": "text"
+									}
+								],
+								"url": "http://localhost:8000/auth/logout/"
+							},
+							"response": []
+						},
+						{
+							"name": "csrf_token[afterLogout]",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/auth/csrf-token/"
+							},
+							"response": []
+						},
+						{
+							"name": "friendInfo",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/auth/friend-info/?uid=&friend-uid",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"friend-info",
+										""
+									],
+									"query": [
+										{
+											"key": "uid",
+											"value": ""
+										},
+										{
+											"key": "friend-uid",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "friends",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "401_UNAUTHORIZED",
+					"item": [
+						{
+							"name": "login: invalid-credentials",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 401\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(401);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"//login with the account example@example.com\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"email\": \"notexample@example.com\", \r\n    \"password\": \"3x4mpl3:ex\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/auth/login/"
+							},
+							"response": []
+						},
+						{
+							"name": "isAuthenticated: not-authenticated",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 401\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(401);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/auth/is-authenticated"
+							},
+							"response": []
+						},
+						{
+							"name": "userInfo: not-authenticated",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 401\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(401);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-CSRFToken",
+										"value": "B4IHPupVhNYvASHml6gYArcsBHGzPgbL",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8000/auth/user-info/?username=xxxxx&uid=0000",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"user-info",
+										""
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "xxxxx"
+										},
+										{
+											"key": "uid",
+											"value": "0000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logout",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 401\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(401);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest('http://localhost:8000/auth/csrf-token/', function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error(err);\r",
+											"    } else {\r",
+											"        var csrfToken = res.json().csrf_token;\r",
+											"\r",
+											"        console.debug(\"csrf_token: {}\", csrfToken );\r",
+											"        pm.environment.set(\"X-CSRFToken\", csrfToken);\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CSRFToken",
+										"value": "ica9sJxVwWWfiZWZbZoK7TriBWpDO6kK",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/auth/logout/"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "400_BAD_REQUEST",
+					"item": [
+						{
+							"name": "signup",
+							"item": [
+								{
+									"name": "email-already-exists",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response status code is 400\", function () {\r",
+													"    pm.expect(pm.response.code).to.equal(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Message exists and is not empty\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response time is less than 500ms\", function () {\r",
+													"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{ \r\n    \"email\": \"notexample@example.com\",\r\n    \"username\": \"example\", \r\n    \"password\": \"3x4mpl3:ex\" \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:8000/auth/signup/"
+									},
+									"response": []
+								},
+								{
+									"name": "empty-field-email",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response status code is 400\", function () {\r",
+													"    pm.expect(pm.response.code).to.equal(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Message exists and is not empty\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response time is less than 500ms\", function () {\r",
+													"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{ \r\n    \"email\": \"\", \r\n    \"username\": \"example5\", \r\n    \"password\": \"3x4mpl3:ex\" \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:8000/auth/signup/"
+									},
+									"response": []
+								},
+								{
+									"name": "empty-field-username",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response status code is 400\", function () {\r",
+													"    pm.expect(pm.response.code).to.equal(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Message exists and is not empty\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response time is less than 500ms\", function () {\r",
+													"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{ \r\n    \"email\": \"example1@example.com\", \r\n    \"username\": \"\", \r\n    \"password\": \"3x4mpl3:ex\" \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:8000/auth/signup/"
+									},
+									"response": []
+								},
+								{
+									"name": "empty-field-password",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response status code is 400\", function () {\r",
+													"    pm.expect(pm.response.code).to.equal(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Message exists and is not empty\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response time is less than 500ms\", function () {\r",
+													"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{ \r\n    \"email\": \"example1@example.com\", \r\n    \"username\": \"example1\", \r\n    \"password\": \"\" \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:8000/auth/signup/"
+									},
+									"response": []
+								},
+								{
+									"name": "unhealthy-password-tooCommon",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response status code is 400\", function () {\r",
+													"    pm.expect(pm.response.code).to.equal(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Message exists and is not empty\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response time is less than 500ms\", function () {\r",
+													"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{ \r\n    \"email\": \"example5@example.com\", \r\n    \"username\": \"example5\", \r\n    \"password\": \"password\" \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:8000/auth/signup/"
+									},
+									"response": []
+								},
+								{
+									"name": "unhealthy-password-tooShort",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response status code is 400\", function () {\r",
+													"    pm.expect(pm.response.code).to.equal(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Message exists and is not empty\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response time is less than 500ms\", function () {\r",
+													"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{ \r\n    \"email\": \"example5@example.com\", \r\n    \"username\": \"example5\", \r\n    \"password\": \"echo1\" \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:8000/auth/signup/"
+									},
+									"response": []
+								},
+								{
+									"name": "unhealthy-password-reuseViolation",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response status code is 400\", function () {\r",
+													"    pm.expect(pm.response.code).to.equal(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Message exists and is not empty\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response time is less than 500ms\", function () {\r",
+													"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{ \r\n    \"email\": \"example5@example.com\", \r\n    \"username\": \"example5\", \r\n    \"password\": \"examples7798\" \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:8000/auth/signup/"
+									},
+									"response": []
+								},
+								{
+									"name": "unhealthy-password-digitOnly",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response status code is 400\", function () {\r",
+													"    pm.expect(pm.response.code).to.equal(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Message exists and is not empty\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response time is less than 500ms\", function () {\r",
+													"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{ \r\n    \"email\": \"example52@example.com\", \r\n    \"username\": \"example5\", \r\n    \"password\": \"128938402\" \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:8000/auth/signup/"
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "login: empty-field-email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 400\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"email\": \"\", \r\n    \"password\": \"3x4mpl3:ex\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/auth/login/"
+							},
+							"response": []
+						},
+						{
+							"name": "login: empty-field-password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 400\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"email\": \"example@example.com\", \r\n    \"password\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/auth/login/"
+							},
+							"response": []
+						},
+						{
+							"name": "login: already-loggedin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 400\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"//login with the account example@example.com\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"email\": \"example@example.com\", \r\n    \"password\": \"3x4mpl3:ex\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/auth/login/"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Game",
+			"item": [
+				{
+					"name": "201_CREATED",
+					"item": [
+						{
+							"name": "player-info: addPongPlayer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 201\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(50);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/game/pong/info/?uid=example%230000",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"game",
+										"pong",
+										"info",
+										""
+									],
+									"query": [
+										{
+											"key": "uid",
+											"value": "example%230000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "player-info: addTrisPlayer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 201\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Message exists and is not empty\", function () {\r",
+											"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 500ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(50);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/game/tris/player-info/?uid=example%230000",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"game",
+										"tris",
+										"player-info",
+										""
+									],
+									"query": [
+										{
+											"key": "uid",
+											"value": "example%230000"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "200_OK",
+					"item": [
+						{
+							"name": "pong",
+							"item": [
+								{
+									"name": "player-info",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response status code is 200\", function () {\r",
+													"    pm.expect(pm.response.code).to.equal(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Message exists and is not empty\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Verify the login response data\", function () {\r",
+													"    const responseData = pm.response.json();\r",
+													"    pm.expect(responseData).to.be.an('object');\r",
+													"    pm.expect(responseData.data).to.be.an('object');\r",
+													"\r",
+													"    pm.expect(responseData.data).to.have.property('PVPP');\r",
+													"    pm.expect(responseData.data).to.have.property('PVPW');\r",
+													"    pm.expect(responseData.data).to.have.property('PVEP');\r",
+													"    pm.expect(responseData.data).to.have.property('PVEW');\r",
+													"    pm.expect(responseData.data).to.have.property('TMW');\r",
+													"    pm.expect(responseData.data).to.have.property('TW');\r",
+													"    pm.expect(responseData.data).to.have.property('TOTPT');\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response time is less than 500ms\", function () {\r",
+													"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8000/game/pong/player-info/?uid=example%230000",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"game",
+												"pong",
+												"player-info",
+												""
+											],
+											"query": [
+												{
+													"key": "uid",
+													"value": "example%230000"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "player-info: add PvE winned game",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response status code is 200\", function () {\r",
+													"    pm.expect(pm.response.code).to.equal(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Message exists and is not empty\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.exist.and.to.not.be.empty;\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response time is less than 500ms\", function () {\r",
+													"  pm.expect(pm.response.responseTime).to.be.below(50);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "X-CSRFToken",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"mode\": \"PvP\",\r\n    \"player1\":\"player1\",\r\n    \"player2\":\"player2\",\r\n    \"score_p1\":\"11\",\r\n    \"score_p2\":\"0\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8000/game/pong/player-info/?uid=8982",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"game",
+												"pong",
+												"player-info",
+												""
+											],
+											"query": [
+												{
+													"key": "uid",
+													"value": "8982"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "friend-info",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8000/game/pong/friend-info/?uid=player%230000&friend_uid=player%230001",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"game",
+												"pong",
+												"friend-info",
+												""
+											],
+											"query": [
+												{
+													"key": "uid",
+													"value": "player#0000"
+												},
+												{
+													"key": "friend_uid",
+													"value": "player#0001"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "tris",
+							"item": [
+								{
+									"name": "player-info",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8000/game/pong-player-info/?username=example&uid=8982",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"game",
+												"pong-player-info",
+												""
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "example"
+												},
+												{
+													"key": "uid",
+													"value": "8982"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "player-info: add PvE winned game",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"currentMode\": \"Tournamet\",\r\n    \"victory\": \"1\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8000/game/tris/player-info/?username=example&uid=8982",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"game",
+												"tris",
+												"player-info",
+												""
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "example"
+												},
+												{
+													"key": "uid",
+													"value": "8982"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "player-info: verify updates",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8000/game/tris/player-info/?username=example&uid=8982",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"game",
+												"tris",
+												"player-info",
+												""
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "example"
+												},
+												{
+													"key": "uid",
+													"value": "8982"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "401_UNAUTHORIZED",
+					"item": [
+						{
+							"name": "pong",
+							"item": [
+								{
+									"name": "player-info",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8000/game/pong/player-info/?username=example&uid=8982",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"game",
+												"pong",
+												"player-info",
+												""
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "example"
+												},
+												{
+													"key": "uid",
+													"value": "8982"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "player-info: add PvE winned game",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"currentMode\": \"PvE\",\r\n    \"victory\": \"1\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8000/game/pong/player-info/?username=example&uid=8982",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"game",
+												"pong",
+												"player-info",
+												""
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "example"
+												},
+												{
+													"key": "uid",
+													"value": "8982"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "player-info: verify updates",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8000/game/pong/player-info/?username=example&uid=8982",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"game",
+												"pong",
+												"player-info",
+												""
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "example"
+												},
+												{
+													"key": "uid",
+													"value": "8982"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "tris",
+							"item": [
+								{
+									"name": "player-info",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8000/game/pong-player-info/?username=example&uid=8982",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"game",
+												"pong-player-info",
+												""
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "example"
+												},
+												{
+													"key": "uid",
+													"value": "8982"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "player-info: add PvE winned game",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"currentMode\": \"Tournamet\",\r\n    \"victory\": \"1\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8000/game/tris/player-info/?username=example&uid=8982",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"game",
+												"tris",
+												"player-info",
+												""
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "example"
+												},
+												{
+													"key": "uid",
+													"value": "8982"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "player-info: verify updates",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8000/game/tris/player-info/?username=example&uid=8982",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"game",
+												"tris",
+												"player-info",
+												""
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "example"
+												},
+												{
+													"key": "uid",
+													"value": "8982"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
